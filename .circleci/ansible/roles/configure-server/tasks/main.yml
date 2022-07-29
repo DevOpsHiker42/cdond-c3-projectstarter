@@ -1,0 +1,36 @@
+---
+- name: "install python3"
+  become: yes
+  ansible.builtin.apt:
+    name: "python3"
+    state: present
+
+- name: "update apt packages"
+  become: yes
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: "upgrade packages"
+  become: yes
+  ansible.builtin.apt:
+    upgrade: yes
+
+- name: "remove old dependencies"
+  become: yes
+  ansible.builtin.apt:
+    autoremove: yes
+
+- name: "install dependencies"
+  become: yes
+  ansible.builtin.apt:
+    name: ["nodejs", "npm"]
+    state: latest
+    update_cache: yes
+
+- name: "install pm2"
+  become: yes
+  npm:
+    name: pm2
+    global: yes
+    production: yes
+    state: present
