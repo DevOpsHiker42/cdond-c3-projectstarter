@@ -180,10 +180,12 @@ jobs:
       - restore_cache:
           keys: [backend-build]
       - run:
+          # From: https://knowledge.udacity.com/questions/397859
           name: Install AWS CLI
           command: |
-            apt-get update
-            apt-get install -y awscli
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
       - run:
           name: Run migrations
           command: |
