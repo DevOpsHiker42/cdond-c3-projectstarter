@@ -208,8 +208,6 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
-      - attach_workspace:
-          at: ~/
       - run:
           name: Install tar
           command: yum install -y tar
@@ -232,6 +230,8 @@ jobs:
           name: Install Node
           command: |
             apk add --no-cache node
+      - attach_workspace:
+          at: ~/
       - run:
           name: Get backend url
           command: |
