@@ -156,12 +156,13 @@ jobs:
           at: ~/
       - run:
           name: Install Ansible
-          command: |
-            apk add --update ansible
+          command: apk add --update ansible
       - run:
           name: Install Python3
-          command: |
-            apk add --no-cache python3
+          command: apk add --no-cache python3
+      - run:
+          name: Install AWS CLI
+          command: pip install awscli
       - run:
           name: Configure server
           no_output_timeout: 30m
