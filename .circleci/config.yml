@@ -214,6 +214,12 @@ jobs:
       - run:
           name: Install gzip
           command: yum install -y gzip
+      - run:
+          name: Install Node
+          command: |
+            # Fetch NodeSource long-term support (LTS) binary and install using YUM
+            curl -sL https://rpm.nodesource.com/setup_lts.x | bash -
+            yum -y install nodejs
       - attach_workspace:
           at: ~/
       - run:
