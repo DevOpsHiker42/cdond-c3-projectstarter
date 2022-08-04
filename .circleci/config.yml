@@ -261,6 +261,9 @@ jobs:
           name: Install AWS CLI
           command: pip install awscli
       - run:
+          name: Install NPM
+          command: apk add --update npm
+      - run:
           name: Deploy backend
           command: |
             cd backend
