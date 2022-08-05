@@ -1,6 +1,7 @@
 ---
 - name: "Extract zipped artifact into EC2 instance"
   ansible.builtin.unarchive:
+    become: yes
     src: /root/project/artifact.tar.gz
     dest: /root/backend
 
