@@ -2,15 +2,15 @@
 - name: "Extract zipped artifact into EC2 instance"
   ansible.builtin.unarchive:
     src: /root/project/artifact.tar.gz
-    dest: /home/ubuntu
+    dest: /root/backend
 
 - name: "Install Node modules"
   shell: |
-    cd /home/ubuntu/backend
+    cd /root/backend
     npm install
 
 - name: "Start Node app"
   shell: |
-    cd /home/ubuntu/backend
+    cd /root/backend
     pm2 stop default
     pm2 start npm -- start
