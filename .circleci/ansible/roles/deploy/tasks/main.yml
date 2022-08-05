@@ -1,17 +1,48 @@
 ---
-- name: "Extract zipped artifact into EC2 instance"
-  ansible.builtin.unarchive:
-    become: yes
-    src: /root/project/artifact.tar.gz
-    dest: /root/backend
+- name: "upgrade packages."
+  become: true
+  apt:
+    upgrade: "yes"
 
-- name: "Install Node modules"
+- name: "install dependencies."
+  become: true
+  apt:
+    name: ["nodejs", "npm"]
+    update_cache: yes
+
+- name: "install pm2"
+  become: true
+  npm:
+    name: pm2
+    global: yes
+    production: yes
+    state: present
+
+- name: create backend directory
+  become: yes
+  file:
+    path: /root/backend
+    state: directory
+    mode: 0755
+
+- name: copy backend files
+  become: yes
+  copy:
+    src: /root/project/artifact.tar.gz
+    dest: /root/backend/artifact.tar.gz
+
+- name: "Extract backend into EC2 instance"
+  become: yes
+  shell: |
+    tar -vxf artifact.tar.gz
+    rm -f artifact.tar.gz
+  args:
+    chdir: /root/backend
+
+- name: "Start Node app"
+  become: yes
   shell: |
     cd /root/backend
     npm install
-
-- name: "Start Node app"
-  shell: |
-    cd /root/backend
     pm2 stop default
     pm2 start npm -- start
