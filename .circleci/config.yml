@@ -214,10 +214,12 @@ jobs:
             else
               echo "0" > migration_result_${CIRCLE_WORKFLOW_ID:0:7}.txt
             fi
+            pwd
+            cat migration_result_${CIRCLE_WORKFLOW_ID:0:7}.txt
       - persist_to_workspace:
           root: ~/
           paths:
-            - project/backend/migration_result_${CIRCLE_WORKFLOW_ID:0:7}.txt
+            - /backend/migration_result_${CIRCLE_WORKFLOW_ID:0:7}.txt
       # rollback on failure
       - destroy-environment
 
