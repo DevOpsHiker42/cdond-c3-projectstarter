@@ -204,16 +204,20 @@ jobs:
             cd backend
             npm run migrations > migrations_dump.txt
       - run:
-          name: Send migration results to kvdb
+          name: Create migration result file to save to workspace
           command: |
             cd backend
             cat migrations_dump.txt
             if grep -q "has been executed successfully." migrations_dump.txt
             then
-              curl https://kvdb.io/3UHwfgLjqcGvkoXsMH8jJz/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
+              echo "1" > migration_result_${CIRCLE_WORKFLOW_ID:0:7}.txt
             else
-              curl https://kvdb.io/3UHwfgLjqcGvkoXsMH8jJz/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '0'
+              echo "0" > migration_result_${CIRCLE_WORKFLOW_ID:0:7}.txt
             fi
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project/backend/migration_result_${CIRCLE_WORKFLOW_ID:0:7}.txt
       # rollback on failure
       - destroy-environment
 
@@ -284,6 +288,7 @@ jobs:
           name: Deploy backend
           command: |
             cd backend
+            echo NODE_ENV=local > .env
             npm i
             npm run build
             cd ..
