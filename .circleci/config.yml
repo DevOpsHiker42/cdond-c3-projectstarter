@@ -219,7 +219,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - /backend/migration_result_${CIRCLE_WORKFLOW_ID:0:7}.txt
+            - backend/migration_result_${CIRCLE_WORKFLOW_ID:0:7}.txt
       # rollback on failure
       - destroy-environment
 
