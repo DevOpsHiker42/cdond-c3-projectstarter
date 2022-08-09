@@ -147,7 +147,7 @@ jobs:
           paths:
             - project/.circleci/ansible/inventory.txt
       # rollback on failure
-      - destroy-environment
+      #- destroy-environment
 
   configure-infrastructure:
     docker:
@@ -175,7 +175,7 @@ jobs:
             cd .circleci/ansible
             ansible-playbook -i inventory.txt configure-server.yml
       # rollback on failure
-      - destroy-environment
+      #- destroy-environment
 
   run-migrations:
     docker:
@@ -222,7 +222,7 @@ jobs:
           paths:
             - project/backend/migration_result.txt
       # rollback on failure
-      - destroy-environment
+      #- destroy-environment
 
   deploy-frontend:
     docker:
@@ -263,7 +263,7 @@ jobs:
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
       # Rollback on failure
-      - destroy-environment
+      #- destroy-environment
 
   deploy-backend:
     docker:
@@ -302,7 +302,7 @@ jobs:
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
       # Rollback on failure
-      - destroy-environment
+      #- destroy-environment
 
   smoke-test:
     docker:
@@ -354,7 +354,7 @@ jobs:
               return 1
             fi
       # Rollback on failure
-      - destroy-environment
+      #- destroy-environment
 
 workflows:
   default:
