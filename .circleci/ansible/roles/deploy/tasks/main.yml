@@ -49,10 +49,8 @@
 - name: "Start Node app"
   become: yes
   shell: |
-    pm2 stop default
+    cd /root/backend/dist
     pm2 start -f ./main.js
-    args:
-      chdir: /root/backend/dist
     environment:
       ENVIRONMENT: production
       # Override TYPEORM environment variables to point to /root/backend/dist instead of /root/backend/src
