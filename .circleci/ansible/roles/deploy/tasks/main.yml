@@ -39,10 +39,23 @@
   args:
     chdir: /root/backend
 
-- name: "Start Node app"
+- name: "Install NPM"
   become: yes
   shell: |
     cd /root/backend
     npm install
+    npm run build
+
+- name: "Start Node app"
+  become: yes
+  shell: |
     pm2 stop default
-    pm2 start npm -- start
+    pm2 start -f ./main.js
+    args:
+      chdir: /root/backend/dist
+    environment:
+      ENVIRONMENT: production
+      # Override TYPEORM environment variables to point to /root/backend/dist instead of /root/backend/src
+      TYPEORM_MIGRATIONS_DIR: "./migrations"
+      TYPEORM_MIGRATIONS: "./migrations/*.js"
+      TYPEORM_ENTITIES: "./modules/domain/**/*.entity.js"
