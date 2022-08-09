@@ -51,9 +51,9 @@
   shell: |
     cd /root/backend/dist
     pm2 start -f ./main.js
-    environment:
-      ENVIRONMENT: production
-      # Override TYPEORM environment variables to point to /root/backend/dist instead of /root/backend/src
-      TYPEORM_MIGRATIONS_DIR: "./migrations"
-      TYPEORM_MIGRATIONS: "./migrations/*.js"
-      TYPEORM_ENTITIES: "./modules/domain/**/*.entity.js"
+  environment:
+    ENVIRONMENT: production
+    # Override TYPEORM environment variables to point to /root/backend/dist instead of /root/backend/src
+    TYPEORM_MIGRATIONS_DIR: "./migrations"
+    TYPEORM_MIGRATIONS: "./migrations/*.js"
+    TYPEORM_ENTITIES: "./modules/domain/**/*.entity.js"
