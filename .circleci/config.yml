@@ -10,6 +10,7 @@ commands:
           name: Destroy environments
           when: on_fail
           command: |
+            echo "Destroying stacks for: ${CIRCLE_WORKFLOW_ID:0:7}"
             aws cloudformation delete-stack --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}"
             aws s3 rm s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
             aws cloudformation delete-stack --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}"
@@ -210,16 +211,16 @@ jobs:
             cat migrations_dump.txt
             if grep -q "has been executed successfully." migrations_dump.txt
             then
-              echo "1" > migration_result_${CIRCLE_WORKFLOW_ID:0:7}.txt
+              echo "1" > migration_result.txt
             else
-              echo "0" > migration_result_${CIRCLE_WORKFLOW_ID:0:7}.txt
+              echo "0" > migration_result.txt
             fi
-            pwd
-            cat migration_result_${CIRCLE_WORKFLOW_ID:0:7}.txt
+            echo "Migration Result:"
+            cat migration_result.txt
       - persist_to_workspace:
           root: ~/
           paths:
-            - project/backend/migration_result_${CIRCLE_WORKFLOW_ID:0:7}.txt
+            - project/backend/migration_result.txt
       # rollback on failure
       - destroy-environment
 
