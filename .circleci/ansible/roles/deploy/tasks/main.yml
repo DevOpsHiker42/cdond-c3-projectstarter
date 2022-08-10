@@ -43,7 +43,3 @@
   environment:
     ENVIRONMENT: production
     NODE_ENV: production
-    # Override TYPEORM environment variables to point to /root/backend/dist
-    TYPEORM_MIGRATIONS_DIR: "/root/backend/dist/migrations"
-    TYPEORM_MIGRATIONS: "/root/backend/dist/migrations/*.js"
-    TYPEORM_ENTITIES: "/root/backend/dist/modules/domain/**/*.entity.js"
