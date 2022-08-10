@@ -49,5 +49,11 @@
 - name: "Start Node app"
   become: yes
   shell: |
-    cd /root/backend/src
+    cd /root/backend/dist
     pm2 start -f ./main.js
+-  environment:
+-    ENVIRONMENT: production
+-    # Override TYPEORM environment variables to point to /root/backend/dist instead of /root/backend/src
+-    TYPEORM_MIGRATIONS_DIR: "/root/backend/dist/migrations"
+-    TYPEORM_MIGRATIONS: "/root/backend/dist/migrations/*.js"
+-    TYPEORM_ENTITIES: "/root/backend/dist/modules/domain/**/*.entity.js"
