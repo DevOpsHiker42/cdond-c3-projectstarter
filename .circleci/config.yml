@@ -301,7 +301,6 @@ jobs:
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
-            curl https://localhost:3030/api/status
       # Rollback on failure
       - destroy-environment
 
