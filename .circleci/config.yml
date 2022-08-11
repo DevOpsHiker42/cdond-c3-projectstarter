@@ -300,6 +300,7 @@ jobs:
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
+            # Deploy using Ansible
             ansible-playbook -i inventory.txt deploy-backend.yml
       # Rollback on failure
       - destroy-environment

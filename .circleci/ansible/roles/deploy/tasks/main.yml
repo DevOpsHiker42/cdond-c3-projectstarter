@@ -38,6 +38,7 @@
 - name: "start node app"
   become: yes
   shell: |
+    echo "TYPEORM_DATABASE="${TYPEORM_DATABASE}
     cd /root/backend/dist
     pm2 stop default
     pm2 start main.js --name backend -f
