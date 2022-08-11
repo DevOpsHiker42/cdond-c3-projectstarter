@@ -1,4 +1,8 @@
 ---
+- name: Debug env vars
+  ansible.builtin.debug:
+    msg: "'{{ lookup('ansible.builtin.env', 'TYPEORM_DATABASE') }}' is the TYPEORM_DATABASE"
+
 - name: "install python3"
   become: yes
   ansible.builtin.apt:

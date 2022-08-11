@@ -302,7 +302,6 @@ jobs:
             cat inventory.txt
             # Deploy using Ansible
             ansible-playbook -i inventory.txt deploy-backend.yml
-            echo "Post-Ansible: TYPEORM_DATABASE="${TYPEORM_DATABASE}
       # Rollback on failure
       - destroy-environment
 
