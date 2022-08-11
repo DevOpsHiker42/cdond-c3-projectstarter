@@ -298,11 +298,11 @@ jobs:
             # Zip the directory
             tar -C backend -czvf artifact.tar.gz .
             cd .circleci/ansible
-            echo "TYPEORM_DATABASE="${TYPEORM_DATABASE}
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
             # Deploy using Ansible
             ansible-playbook -i inventory.txt deploy-backend.yml
+            echo "Post-Ansible: TYPEORM_DATABASE="${TYPEORM_DATABASE}
       # Rollback on failure
       - destroy-environment
 
