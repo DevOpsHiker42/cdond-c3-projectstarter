@@ -30,6 +30,11 @@ commands:
           name: Revert migrations
           when: on_fail
           command: |
+            cd ~/project/backend
+            echo "-----------------------"
+            echo "Migration result files:"
+            ls -ltr migration_result_*
+            echo "-----------------------"
             SUCCESS=`cat migration_result_<< parameters.workflow_id >>.txt`
             # Logic for reverting the database state
             if (( $SUCCESS == 1 ));
@@ -252,7 +257,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - project/backend/migration_result_${CIRCLE_WORKFLOW_ID:0:7}.txt
+            - project/backend/migration_result_*
       # revert migrations and rollback on failure
       - revert-migrations
       - destroy-environment
