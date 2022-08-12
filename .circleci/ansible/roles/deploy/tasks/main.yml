@@ -26,7 +26,7 @@
     upgrade: "yes"
 
 - name: "install dependencies"
-  # See: https://knowledge.udacity.com/questions/881483
+  # See: https://knowledge.udacity.com/questions/852252
   become: true
   shell: |
     apt-get install -y nodejs
@@ -37,14 +37,13 @@
     n 13.8.0
 
 - name: "start node app"
+  # See: https://knowledge.udacity.com/questions/881483
   become: yes
   shell: |
     cd /root/backend/dist
-    #npm install --legacy-peer-deps
-    #npm install winston --legacy-peer-deps
     npm install
     pm2 stop default
-    pm2 start npm -- start
+    pm2 start main.js --name backend -f
   environment:
     ENVIRONMENT: production
     NODE_ENV: production
