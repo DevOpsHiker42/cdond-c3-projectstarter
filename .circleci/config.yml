@@ -310,6 +310,7 @@ jobs:
       - run:
           name: Deploy backend
           command: |
+            echo "TYPEORM_DATABASE="${TYPEORM_DATABASE}
             cd backend
             echo NODE_ENV=local > .env
             npm i
@@ -346,7 +347,6 @@ jobs:
       - run:
           name: Backend smoke test.
           command: |
-            echo "TYPEORM_DATABASE="${TYPEORM_DATABASE}
             export BACKEND_IP=$(aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=tag:Project,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
