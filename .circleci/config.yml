@@ -30,12 +30,7 @@ commands:
           name: Revert migrations
           when: on_fail
           command: |
-            cd ~/project/backend/migration_results
-            echo "-----------------------"
-            echo "Migration result files:"
-            ls -ltr
-            echo "-----------------------"
-            SUCCESS=`cat << parameters.workflow_id >>.txt`
+            SUCCESS=$(curl --insecure  https://kvdb.io/SgnqhtswhC8C12mwsfQMgL/migration_<< parameters.workflow_id >>)
             # Logic for reverting the database state
             if (( $SUCCESS == 1 ));
             then
@@ -243,24 +238,15 @@ jobs:
             cd backend
             npm run migrations > migrations_dump.txt
       - run:
-          name: Create migration result file to save to workspace
+          name: Send migration result file to kvdb.io
           command: |
             cd backend
-            if [[ ! -e migration_results ]]; then
-              mkdir migration_results
-            fi
             if grep -q "has been executed successfully." migrations_dump.txt
             then
-              echo "1" > migration_results/${CIRCLE_WORKFLOW_ID:0:7}.txt
+              curl https://kvdb.io/SgnqhtswhC8C12mwsfQMgL/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
             else
-              echo "0" > migration_results/${CIRCLE_WORKFLOW_ID:0:7}.txt
+              curl https://kvdb.io/SgnqhtswhC8C12mwsfQMgL/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '0'
             fi
-            echo "Migration Result:"
-            cat migration_results/${CIRCLE_WORKFLOW_ID:0:7}.txt
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project/backend/migration_results
       # revert migrations and rollback on failure
       - revert-migrations
       - destroy-environment
