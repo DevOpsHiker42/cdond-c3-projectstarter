@@ -457,15 +457,9 @@ jobs:
             then
               echo "------------------------------------------------------------
               echo "Removing old stacks and files from workflow ID ${OldWorkflowID}"
-              export s3url="s3://udapeople-${OldWorkflowID}"
-              echo "Removing S3 bucket: ${s3url}"
-              aws s3 rm "${s3url}" --recursive
-              export backendstack="udapeople-backend-${OldWorkflowID}"
-              echo "Removing back-end stack: ${backendstack}"
-              aws cloudformation delete-stack --stack-name "${backendstack}"
-              export frontendstack="udapeople-frontend-${OldWorkflowID}"
-              echo "Removing front-end stack: ${frontendstack}"
-              aws cloudformation delete-stack --stack-name "${frontendstack}"
+              aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
+              aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
+              aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
               echo "------------------------------------------------------------
             else
               echo "------------------------------------------------------------
