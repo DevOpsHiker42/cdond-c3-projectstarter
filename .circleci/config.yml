@@ -473,6 +473,7 @@ jobs:
               echo "Nothing to clean up:"
               echo "Old Workflow ID:${OldWorkflowID}"
               echo "Stacks:${STACKS[@]}"
+              echo "DEV BRANCH CHANGE!"
               echo "------------------------------------------------------------
             fi
 
