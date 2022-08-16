@@ -410,6 +410,7 @@ jobs:
               --no-paginate --output text)
             echo ${OldWorkflowFullID}
             echo ${OldWorkflowFullID##udapeople-} > OldWorkflowID.txt
+            pwd
             cat OldWorkflowID.txt
       - run:
           name: Update cloudfront distribution
@@ -441,6 +442,8 @@ jobs:
       - run:
           name: Get old stack workflow id
           command: |
+            pwd
+            find . -name OldWorkflowID.txt -print
             # Fetch the Old workflow ID
             export OldWorkflowID=`cat project/OldWorkflowID.txt`
             echo OldWorkflowID: "${OldWorkflowID}"
