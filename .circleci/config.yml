@@ -455,18 +455,18 @@ jobs:
             ##################################
             if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
             then
-              echo "------------------------------------------------------------
+              echo "------------------------------------------------------------"
               echo "Removing old stacks and files from workflow ID ${OldWorkflowID}"
               aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
               aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
               aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
-              echo "------------------------------------------------------------
+              echo "------------------------------------------------------------"
             else
-              echo "------------------------------------------------------------
+              echo "------------------------------------------------------------"
               echo "Nothing to clean up:"
               echo "Old Workflow ID:${OldWorkflowID}"
               echo "Stacks:${STACKS[@]}"
-              echo "------------------------------------------------------------
+              echo "------------------------------------------------------------"
             fi
 
 workflows:
