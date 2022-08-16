@@ -410,7 +410,6 @@ jobs:
               --no-paginate --output text)
             echo ${OldWorkflowFullID}
             echo ${OldWorkflowFullID##udapeople-} > OldWorkflowID.txt
-            pwd
             cat OldWorkflowID.txt
       - run:
           name: Update cloudfront distribution
@@ -442,10 +441,8 @@ jobs:
       - run:
           name: Get old stack workflow id
           command: |
-            pwd
-            find . -name OldWorkflowID.txt -print
             # Fetch the Old workflow ID
-            export OldWorkflowID=`cat project/OldWorkflowID.txt`
+            export OldWorkflowID=`cat ~/project/OldWorkflowID.txt`
             echo OldWorkflowID: "${OldWorkflowID}"
             echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID:0:7}"
             # Fetch the stack names
@@ -459,7 +456,6 @@ jobs:
             then
               echo "------------------------------------------------------------
               echo "Removing old stacks and files from workflow ID ${OldWorkflowID}"
-              echo "------------------------------------------------------------
               export s3url="s3://udapeople-${OldWorkflowID}"
               echo "Removing S3 bucket: "${s3url}
               aws s3 rm ${s3url} --recursive
@@ -469,6 +465,7 @@ jobs:
               export frontendstack="udapeople-frontend-${OldWorkflowID}"
               echo "Removing front-end stack: "${frontendstack}
               aws cloudformation delete-stack --stack-name ${frontendstack}
+              echo "------------------------------------------------------------
             else
               echo "------------------------------------------------------------
               echo "Cannot clean up:"
